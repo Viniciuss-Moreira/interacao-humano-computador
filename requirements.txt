@@ -1,0 +1,6 @@
+dspy
+pytelegrambotapi
+openai-whisper
+llama-cpp-python[server]
+huggingface-hub
+requests
