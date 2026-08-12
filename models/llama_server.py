@@ -1,12 +1,9 @@
-import dspy
 import os
 import subprocess
 import sys
 import time
 import atexit
 import requests
-import whisper #pip install -U openai-whisper
-### whisper requires ffmpeg: on windows: choco install ffmpeg
 
 LLAMA_SERVER_HOST = "127.0.0.1"
 LLAMA_SERVER_PORT = 8080
@@ -20,6 +17,7 @@ MODELS_DIR = os.path.join(BASE_DIR, "models")
 MODEL_PATH = os.path.join(MODELS_DIR, HF_FILENAME)
 
 _server_process = None
+
 
 def download_model():
     if os.path.exists(MODEL_PATH):
@@ -92,6 +90,7 @@ def _wait_for_server(timeout=120, interval=2):
         f"Verifique se llama-cpp-python está instalado: pip install 'llama-cpp-python[server]'"
     )
 
+
 def stop_llama_server():
     global _server_process
     if _server_process and _server_process.poll() is None:
@@ -102,64 +101,3 @@ def stop_llama_server():
         except subprocess.TimeoutExpired:
             _server_process.kill()
         _server_process = None
-
-
-class TextToSQL(dspy.Signature):
-    """Generate SQL from natural language.
-
-        Database schema:
-          - produtos: nome, departamento
-    """
-    dbschema = dspy.InputField(desc="Databases schema")
-    question = dspy.InputField(desc="Natural language question")
-
-    sql_query = dspy.OutputField(desc="Valid SQL query")
-
-class ReliableSQLGenerator(dspy.Module):
-    def __init__(self):
-        super().__init__()
-        self.generate_sql = dspy.ChainOfThought(TextToSQL)
-
-    def forward(self, schema, question):
-        pred = self.generate_sql(schema=schema, question=question)
-        return pred
-
-
-def init_ia():
-    """Inicializa toda a infraestrutura de IA: baixa o modelo, sobe o servidor e configura o dspy."""
-    download_model()
-    start_llama_server()
-    lm = dspy.LM('openai/Qwen3-0.6B', api_base=LLAMA_API_BASE, api_key='not-needed')
-    dspy.configure(lm=lm)
-
-
-def generate_sql(question):
-    """Recebe uma pergunta em linguagem natural e retorna a query SQL gerada pela IA."""
-    schema = """
-    CREATE TABLE produtos (
-      nome VARCHAR(50),
-      departmento VARCHAR(50),
-    );
-    """
-    generator = ReliableSQLGenerator()
-    sql = generator.forward(schema, question)
-    print(sql)
-    print(sql.sql_query)
-    return sql.sql_query
-
-
-def whisper_transcribe(filepath: str, model="tiny") -> str:
-    """
-    Function to perform ASR on a .mp3 file
-    :param filepath: Path to the .mp3 audiofile.
-    :param model: Set the model type for whisper
-    ["tiny", "base", "small", "medium", "large"].
-    Larger model means more parameters, higher memory requirements and
-    slower speed.
-    :return: transcribed audio.
-    """
-    # Choose tiny model for faster output.
-    model = whisper.load_model(model)
-    result = model.transcribe(filepath)
-
-    return result["text"]
