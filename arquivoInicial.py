@@ -2,7 +2,8 @@ import sqlite3
 import os
 import telebot #pip install pytelegrambotapi
 import json
-from models import init_ia, generate_sql, whisper_transcribe
+from models.qwen3_model import init_ia, generate_sql
+from models.whisper_model import whisper_transcribe
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 db_path = os.path.join(BASE_DIR, "lojas.db")
