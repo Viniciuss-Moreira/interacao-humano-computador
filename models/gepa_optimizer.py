@@ -2,7 +2,7 @@ import os
 import sqlite3
 import dspy
 
-from .qwen3_model import ReliableSQLGenerator, get_db_schema
+from .qwen3_model import RecursiveSQLGenerator, get_db_schema
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 OPTIMIZED_PATH = os.path.join(BASE_DIR, "optimized_sql_generator.json")
@@ -156,7 +156,7 @@ def run_gepa_optimization(trainset=None):
     )
 
     optimized_program = optimizer.compile(
-        ReliableSQLGenerator(),
+        RecursiveSQLGenerator(),
         trainset=trainset,
     )
 
