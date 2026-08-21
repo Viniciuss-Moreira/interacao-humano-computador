@@ -1,19 +1,13 @@
-import whisper  # pip install -U openai-whisper
-### whisper requires ffmpeg: on windows: choco install ffmpeg
+import whisper
 
+_loaded_models = {}
 
-def whisper_transcribe(filepath: str, model="tiny") -> str:
-    """
-    Function to perform ASR on a .mp3 file
-    :param filepath: Path to the .mp3 audiofile.
-    :param model: Set the model type for whisper
-    ["tiny", "base", "small", "medium", "large"].
-    Larger model means more parameters, higher memory requirements and
-    slower speed.
-    :return: transcribed audio.
-    """
-    # Choose tiny model for faster output.
-    model = whisper.load_model(model)
-    result = model.transcribe(filepath)
+def _get_model(model_name):
+    if model_name not in _loaded_models:
+        _loaded_models[model_name] = whisper.load_model(model_name)
+    return _loaded_models[model_name]
 
+def whisper_transcribe(filepath, model_name="base", language="pt"):
+    model = _get_model(model_name)
+    result = model.transcribe(filepath, language=language)
     return result["text"]
