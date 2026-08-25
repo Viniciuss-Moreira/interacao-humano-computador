@@ -18,7 +18,6 @@ MODEL_PATH = os.path.join(MODELS_DIR, HF_FILENAME)
 
 _server_process = None
 
-
 def download_model():
     if os.path.exists(MODEL_PATH):
         print(f"modelo já existe: {MODEL_PATH}")
@@ -36,7 +35,6 @@ def download_model():
     )
     print(f"Modelo baixado: {path}")
     return path
-
 
 def start_llama_server():
     global _server_process
@@ -60,7 +58,6 @@ def start_llama_server():
     _wait_for_server()
 
     print(f"Servidor llama.cpp rodando em {LLAMA_API_BASE}")
-
 
 def _wait_for_server(timeout=120, interval=2):
     start = time.time()
@@ -89,7 +86,6 @@ def _wait_for_server(timeout=120, interval=2):
         f"Servidor llama.cpp não respondeu em {timeout}s. "
         f"Verifique se llama-cpp-python está instalado: pip install 'llama-cpp-python[server]'"
     )
-
 
 def stop_llama_server():
     global _server_process
