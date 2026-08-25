@@ -12,9 +12,14 @@ class Settings(BaseSettings):
 
     SQLITE_FILE: str = "lojas.db"
 
-    LLM_MODEL: str = "openai/gemma-4-E2B-it-IQ4_XS"
+    LLM_MODEL: str = "openai/Qwen3-0.6B"
     LLM_API_BASE: str = "http://localhost:1337/v1"
     LLM_API_KEY: str = "not-needed"
+
+    LLAMA_SERVER_HOST: str = "127.0.0.1"
+    LLAMA_SERVER_PORT: int = 8080
+    LLAMA_HF_REPO_ID: str = "unsloth/Qwen3-0.6B-GGUF"
+    LLAMA_HF_FILENAME: str = "Qwen3-0.6B-Q8_0.gguf"
 
     TELEGRAM_TOKEN: str = ""
     WHISPER_MODEL: str = "tiny"
