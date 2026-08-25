@@ -12,3 +12,10 @@ __pycache__/
 # IDE
 .vscode/
 .idea/
+
+# Ambiente virtual
+.venv/
+venv/
+
+# Logs
+logs/
