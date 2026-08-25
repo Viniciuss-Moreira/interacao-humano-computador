@@ -4,3 +4,7 @@ openai-whisper
 llama-cpp-python[server]
 huggingface-hub
 requests
+fastapi[standard]
+pydantic>=2.7
+pydantic-settings>=2.3
+loguru
