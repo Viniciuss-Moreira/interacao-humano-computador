@@ -9,8 +9,8 @@ LLAMA_SERVER_HOST = "127.0.0.1"
 LLAMA_SERVER_PORT = 8080
 LLAMA_API_BASE = f"http://{LLAMA_SERVER_HOST}:{LLAMA_SERVER_PORT}/v1"
 
-HF_REPO_ID = "unsloth/Qwen3-0.6B-GGUF"
-HF_FILENAME = "Qwen3-0.6B-Q8_0.gguf"
+HF_REPO_ID = "unsloth/gemma-4-E2B-it-GGUF"
+HF_FILENAME = "gemma-4-E2B-it-Q4_K_M.gguf"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODELS_DIR = os.path.join(BASE_DIR, "models")
@@ -49,8 +49,8 @@ def start_llama_server():
             "--port", str(LLAMA_SERVER_PORT),
             "--n_ctx", "2048",
         ],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
     )
 
     atexit.register(stop_llama_server)
@@ -59,7 +59,7 @@ def start_llama_server():
 
     print(f"Servidor llama.cpp rodando em {LLAMA_API_BASE}")
 
-def _wait_for_server(timeout=120, interval=2):
+def _wait_for_server(timeout=300, interval=2):
     start = time.time()
     health_url = f"http://{LLAMA_SERVER_HOST}:{LLAMA_SERVER_PORT}/v1/models"
 

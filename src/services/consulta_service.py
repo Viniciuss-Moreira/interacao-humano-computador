@@ -18,8 +18,8 @@ class ConsultaService:
 
     def gerar_sql(self, pergunta: str) -> tuple:
         try: 
-            predicao = get_generator().forward(
-                dbschema=get_schema_ddl(), question=pergunta
+            predicao = get_generator()(
+                schema=get_schema_ddl(), question=pergunta
             )
         except Exception as erro:
             logger.error(f"Falha ao gerar SQL: {erro}")

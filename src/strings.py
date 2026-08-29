@@ -9,7 +9,7 @@ ERROR_SQL_NAO_PERMITIDO = "Somente consultas SELECT sao permitidas. Recebido: {c
 ERROR_SQL_MULTIPLOS_COMANDOS = "Apenas um comando por consulta e permitido"
 ERROR_SQL_VAZIO = "A LLM nao gerou nenhuma consulta"
 ERROR_SQL_INVALIDO = "A consulta gerada nao pode ser executada"
-ERROR_LLM_INDISPONIVEL = "Nao consegui falar com o modelo de limguagem"
+ERROR_LLM_INDISPONIVEL = "Nao consegui falar com o modelo de linguagem"
 ERROR_TRANSCRICAO = "Nao consegui entender o audio"
 
 #Sucesso

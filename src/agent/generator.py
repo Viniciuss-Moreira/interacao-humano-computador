@@ -59,7 +59,7 @@ def init_ia():
 
     download_model()
     start_llama_server()
-    lm = dspy.LM('openai/Qwen3-0.6B', api_base=LLAMA_API_BASE, api_key='not-needed')
+    lm = dspy.LM('openai/gemma-4-E2B-it', api_base=LLAMA_API_BASE, api_key='not-needed')
     dspy.configure(lm=lm)
 
     _generator = RecursiveSQLGenerator()

@@ -72,7 +72,7 @@ def mensagem_de_texto(message):
 def main() -> None:
     configure_logger()
     logger.info("Bot do Telegram iniciado")
-    bot.polling()
+    bot.polling(non_stop=True, timeout=60)
 
 
 if __name__ == "__main__":
